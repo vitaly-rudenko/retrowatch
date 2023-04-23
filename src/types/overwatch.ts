@@ -19,6 +19,7 @@ export type Hero = {
 export type Improvement = 'positioning' | 'aim' | 'game-sense' | 'ult-management' | 'cooldown-management'
 
 export type Record = {
+  id: string
   date: Date
   outcome: 'win' | 'loss'
   map: string
@@ -27,4 +28,15 @@ export type Record = {
   performance: 'poor' | 'acceptable' | 'great' | 'perfect'
   improvements: Improvement[]
   note: string
+}
+
+export const TIMESTAMP_TYPES: Timestamp['type'][] = [
+  'start', 'death', 'mistake', 'ultimate', 'lost-fight'
+]
+
+export type Timestamp = {
+  id: string
+  recordId: string | undefined
+  date: Date
+  type: 'start' | 'death' | 'mistake' | 'ultimate' | 'lost-fight'
 }

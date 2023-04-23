@@ -1,17 +1,15 @@
 import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid'
-import { Record } from './types/overwatch'
-import './App.css'
-import { maps } from './constants/overwatch'
+import { Record } from '../../types/overwatch'
+import { maps } from '../../constants/overwatch'
 
 const records: Record[] = [
-  { date: new Date('2020-01-01 12:01'), outcome: 'win', map: 'ilios', heroes: ['junkrat', 'cassidy'], evaluation: 'hard', improvements: ['aim', 'positioning'], performance: 'acceptable', note: '' },
-  { date: new Date('2020-01-01 12:00'), outcome: 'loss', map: 'junkertown', heroes: ['cassidy'], evaluation: 'medium', improvements: ['ult-management', 'game-sense'], performance: 'great', note: '' },
+  { id: '1', date: new Date('2020-01-01 12:01'), outcome: 'win', map: 'ilios', heroes: ['junkrat', 'cassidy'], evaluation: 'hard', improvements: ['aim', 'positioning'], performance: 'acceptable', note: '' },
+  { id: '2', date: new Date('2020-01-01 12:00'), outcome: 'loss', map: 'junkertown', heroes: ['cassidy'], evaluation: 'medium', improvements: ['ult-management', 'game-sense'], performance: 'great', note: '' },
 ]
 
 const rows: GridRowsProp = [...records].sort((a, b) => b.date.getTime() - a.date.getTime())
   .map((record, i) => ({
     ...record,
-    id: String(i),
     date: record.date.toLocaleString(),
     outcome: record.outcome === 'win',
   }))
@@ -27,10 +25,8 @@ const columns: GridColDef[] = [
   { field: 'note', headerName: 'Note', width: 150, editable: true },
 ]
 
-function App() {
+export const Records = () => {
   return <>
     <DataGrid rows={rows} columns={columns} editMode='row' />
   </>
 }
-
-export default App
