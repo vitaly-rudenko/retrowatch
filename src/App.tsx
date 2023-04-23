@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid'
+import { Record } from './types/overwatch'
 import './App.css'
+import { maps } from './constants/overwatch'
+
+const records: Record[] = [
+  { date: new Date('2020-01-01 12:01'), outcome: 'win', map: 'ilios', heroes: ['junkrat', 'cassidy'], evaluation: 'hard', improvements: ['aim', 'positioning'], performance: 'acceptable', note: '' },
+  { date: new Date('2020-01-01 12:00'), outcome: 'loss', map: 'junkertown', heroes: ['cassidy'], evaluation: 'medium', improvements: ['ult-management', 'game-sense'], performance: 'great', note: '' },
+]
+
+const rows: GridRowsProp = [...records].sort((a, b) => b.date.getTime() - a.date.getTime())
+  .map((record, i) => ({
+    ...record,
+    id: String(i),
+    date: record.date.toLocaleString(),
+    outcome: record.outcome === 'win',
+  }))
+
+const columns: GridColDef[] = [
+  { field: 'date', headerName: 'Date', width: 150, editable: true },
+  { field: 'map', headerName: 'Map', width: 150, editable: true, type: 'singleSelect', valueOptions: maps.map(map => map.slug) },
+  { field: 'heroes', headerName: 'Heroes', width: 150, editable: true },
+  { field: 'outcome', headerName: 'Outcome', width: 150, editable: true, type: 'boolean' },
+  { field: 'evaluation', headerName: 'Evaluation', width: 150, editable: true, type: 'singleSelect', valueOptions: ['easy', 'medium', 'hard'] },
+  { field: 'performance', headerName: 'Performance', width: 150, editable: true, type: 'singleSelect', valueOptions: ['great', 'acceptable', 'bad', 'perfect'] },
+  { field: 'improvements', headerName: 'Improvements', width: 150, editable: true },
+  { field: 'note', headerName: 'Note', width: 150, editable: true },
+]
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  return <>
+    <DataGrid rows={rows} columns={columns} editMode='row' />
+  </>
 }
 
 export default App
