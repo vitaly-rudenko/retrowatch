@@ -17,6 +17,16 @@ function formatTime(ms: number) {
   return `${minutes}:${String(seconds).padStart(2, '0')}`
 }
 
+function sliceArrayInParts<T>(array: T[], size: number): T[][] {
+  const result = []
+
+  for (let i = 0; i < array.length; i += size) {
+    result.push(array.slice(i, i + size))
+  }
+
+  return result
+}
+
 export const Timestamps = () => {
   const [timestampsReady, timestamps, setTimestamps] = usePermanentState<Timestamp[]>('timestamps', [])
 
@@ -40,12 +50,10 @@ export const Timestamps = () => {
       {timestamps.length > 0 && <DataGrid rows={rows} columns={columns} editMode='row' hideFooter density='compact' />}
 
       <div className='buttons'>
-        {TIMESTAMP_TYPES.map(type => {
-          if ((timestamps.length === 0) === (type !== 'start')) {
-            return null
-          }
-
-          return <Button key={type} variant='contained' onClick={() => handleType(type)}>{type}</Button>
+        {sliceArrayInParts(TIMESTAMP_TYPES.filter(type => (timestamps.length === 0) !== (type !== 'start')), 2).map(types => {
+          return <div className='buttons__row'>{types.map(type => {
+            return <Button key={type} variant='contained' onClick={() => handleType(type)}>{type}</Button>
+          })}</div>
         })}
       </div>
 
