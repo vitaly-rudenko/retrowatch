@@ -8,7 +8,7 @@ const records: Record[] = [
 ]
 
 const rows: GridRowsProp = [...records].sort((a, b) => b.createdAt - a.createdAt)
-  .map((record, i) => ({
+  .map((record) => ({
     ...record,
     date: new Date(record.createdAt).toLocaleString(),
     outcome: record.outcome === 'win',
