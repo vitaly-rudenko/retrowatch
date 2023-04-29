@@ -20,7 +20,7 @@ export type Improvement = 'positioning' | 'aim' | 'game-sense' | 'ult-management
 
 export type Record = {
   id: string
-  date: Date
+  createdAt: number
   outcome: 'win' | 'loss'
   map: string
   heroes: string[]
@@ -37,6 +37,6 @@ export const TIMESTAMP_TYPES: Timestamp['type'][] = [
 export type Timestamp = {
   id: string
   recordId: string | undefined
-  date: Date
+  createdAt: number
   type: 'start' | 'death' | 'mistake' | 'ultimate' | 'lost-fight'
 }

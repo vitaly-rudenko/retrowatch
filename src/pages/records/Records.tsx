@@ -3,14 +3,14 @@ import { Record } from '../../types/overwatch'
 import { maps } from '../../constants/overwatch'
 
 const records: Record[] = [
-  { id: '1', date: new Date('2020-01-01 12:01'), outcome: 'win', map: 'ilios', heroes: ['junkrat', 'cassidy'], evaluation: 'hard', improvements: ['aim', 'positioning'], performance: 'acceptable', note: '' },
-  { id: '2', date: new Date('2020-01-01 12:00'), outcome: 'loss', map: 'junkertown', heroes: ['cassidy'], evaluation: 'medium', improvements: ['ult-management', 'game-sense'], performance: 'great', note: '' },
+  { id: '1', createdAt: Date.parse('2020-01-01 12:01'), outcome: 'win', map: 'ilios', heroes: ['junkrat', 'cassidy'], evaluation: 'hard', improvements: ['aim', 'positioning'], performance: 'acceptable', note: '' },
+  { id: '2', createdAt: Date.parse('2020-01-01 12:00'), outcome: 'loss', map: 'junkertown', heroes: ['cassidy'], evaluation: 'medium', improvements: ['ult-management', 'game-sense'], performance: 'great', note: '' },
 ]
 
-const rows: GridRowsProp = [...records].sort((a, b) => b.date.getTime() - a.date.getTime())
+const rows: GridRowsProp = [...records].sort((a, b) => b.createdAt - a.createdAt)
   .map((record, i) => ({
     ...record,
-    date: record.date.toLocaleString(),
+    date: new Date(record.createdAt).toLocaleString(),
     outcome: record.outcome === 'win',
   }))
 
